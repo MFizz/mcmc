@@ -7,7 +7,7 @@ Created on 16.07.2014
 import numpy as np 
 import scipy.stats as stats
 
-class MHProposal(object):
+class UnivariateNormal(object):
 
     def __init__(self, mean, variance):
         self.mean = mean
@@ -26,12 +26,39 @@ class MHProposal(object):
             return stats.norm.pdf(value, loc=currentValue, scale=self.variance)
     
     def getStartPoint(self):
-        return np.random.normal(self.mean, self.variance)
+        return self.mean
     
     def adjust(self, adjustParameter):
         self.variance = self.variance
         
+
+
+
+
+class MultivariateNormal(object):
+
+    def __init__(self, meanVector, covarianceMatrix):
+        self.mean = meanVector
+        self.covarianceMatrix = covarianceMatrix
     
+    def getSample(self, currentValue):
+        if currentValue == None:
+            return np.random.multivariate_normal(self.mean, self.covarianceMatrix)
+        else:
+            return np.random.multivariate_normal(currentValue, self.covarianceMatrix)
+    
+    def getPDF(self, value, currentValue):
+        if currentValue==None:
+            return 1/( (2*np.pi)**(self.mean.shape[0]/2) * np.linalg.det(self.covarianceMatrix)**0.5 ) * np.e**( -0.5*np.transpose((value-self.mean)) * np.linalg.inv(self.covarianceMatrix)*(value-self.mean) )
+        else:
+            return 1/( (2*np.pi)**(currentValue.shape[0]/2) * np.linalg.det(self.covarianceMatrix)**0.5 ) * np.e**(np.dot(np.dot( -0.5*np.transpose((value-currentValue)), np.linalg.inv(self.covarianceMatrix)), (value-currentValue)) )
+    
+    def getStartPoint(self):
+        return np.random.multivariate_normal(self.mean, self.covarianceMatrix)
+    
+    def adjust(self, adjustParameter):
+        self.covarianceMatrix = self.covarianceMatrix
+
         
 class AdaptiveMHProposal(object):
 

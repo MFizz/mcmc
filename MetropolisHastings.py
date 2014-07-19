@@ -7,6 +7,7 @@ Created on 16.07.2014
 import Name
 import numpy as np
 import matplotlib.pyplot as plt
+import Animation
 
 class MetropolisHastings():
 
@@ -19,18 +20,19 @@ class MetropolisHastings():
     
     
     
-    def start(self, noOfSamples, animate, stepSize):
-        samples = np.ndarray([])
+    def start(self, noOfSamples, animate, stepSize, dimensionality):
         accepted = 0
         # get a start point
         x = self.proposal.getStartPoint()
+        samples = np.array([x])
         
         if animate:
             plt.ion()
-            xDesired = np.arange(-10, 10, 0.1)
-            pDesired = self.desired(xDesired)
-            binSize = 0.25
-            binBoundaries = np.arange(-10,10,binSize)
+            if dimensionality==1:
+                xDesired = np.arange(-10, 10, 0.1)
+                pDesired = self.desired(xDesired)
+                binSize = 0.25
+                binBoundaries = np.arange(-10,10,binSize)
 
 
         for i in xrange(noOfSamples):
@@ -49,20 +51,17 @@ class MetropolisHastings():
             else:
                 x = x
 
-            samples = np.append(samples, x)
-            
-            
+            if dimensionality==1:
+                samples = np.append(samples, x)
+            else:
+                samples = np.append(samples, [x], axis=0)
+                
+            acceptanceRate = float(accepted)/samples.size
+            #print x, acceptanceRate
             if animate and (i+2)%stepSize==0:
-                plt.clf()
-                plt.title("Approximation")
-                plt.xlabel("x")
-                plt.ylabel("f(x)")
-                plt.hist(samples, bins=binBoundaries, weights=np.zeros_like(samples) + (1. / samples.size / binSize))
-                plt.plot(xDesired, pDesired)
-                plt.xlim([-10,10])
-                plt.text(5, np.max(pDesired-0.05), "Samples: %.0f" %samples.size)
-                plt.text(5, np.max(pDesired), "Acceptance: %.2f" %(float(accepted)/samples.size))
-                plt.draw()
-                plt.pause(0.00001)
+                if dimensionality==1:
+                    Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate)
+                if dimensionality==2:
+                    Animation.animate2D(samples, acceptanceRate)
             
         
