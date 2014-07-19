@@ -9,8 +9,10 @@ import Name
 import Distribution
 import numpy as np
 
+dimensionality = 2
+
 if __name__ == '__main__':
-    desired = Distribution.MultivariateNormal(np.array([3,-2]), np.array([[3,0.5],[0.5,2]]))
-    problem1 = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, lambda x: desired.getPDF(x, np.array([0,0])), Distribution.MultivariateNormal(np.array([0,0]), np.array([[5,0],[0,5]])), True)
+    desired = Distribution.MultivariateNormal(np.array([10,-2]), np.array([[3,-1],[-1,2]]))
+    problem1 = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, lambda x: desired.getPDF(x, None), Distribution.MultivariateNormal(np.array([0,0]), 0.1 * np.identity(dimensionality) * 1./dimensionality), randomWalk=True)
    # problem1 = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, stats.cauchy.pdf, Distribution.UnivariateNormal(0,1), True)
-    problem1.start(noOfSamples=10000000, animate=True, stepSize=100, dimensionality=1)
+    problem1.start(noOfSamples=10000000, animate=True, stepSize=100, dimensionality=dimensionality)

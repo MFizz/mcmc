@@ -8,6 +8,7 @@ import Name
 import numpy as np
 import matplotlib.pyplot as plt
 import Animation
+import Utility
 
 class MetropolisHastings():
 
@@ -38,7 +39,10 @@ class MetropolisHastings():
         for i in xrange(noOfSamples):
             # get a proposal and calulate the acceptance rate
             if self.randomWalk:
-                x_new = self.proposal.getSample(x)
+                if self.algorithm == Name.ADAPTIVE_METROPOLIS_HASTINGS and self.samples > dimensionality/2.:
+                    x_new = self.proposal.getSample(x, sampleCovariance=Utility.getSampleCovariance(samples)*1./dimensionality)
+                else:
+                    x_new = self.proposal.getSample(x)
                 acceptance = ( self.desired(x_new)/self.desired(x) )
             else:
                 x_new = self.proposal.getSample(None)
@@ -57,7 +61,8 @@ class MetropolisHastings():
                 samples = np.append(samples, [x], axis=0)
                 
             acceptanceRate = float(accepted)/samples.size
-            #print x, acceptanceRate
+            
+            
             if animate and (i+2)%stepSize==0:
                 if dimensionality==1:
                     Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate)

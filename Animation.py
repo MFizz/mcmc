@@ -27,13 +27,11 @@ def animate2D(samples, acceptanceRate):
     plt.title("Approximation")
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.axis('equal')
-  #  plt.xlim([-50,50])
     xItems = [x[0] for x in samples]
     yItems = [x[1] for x in samples]
     plt.text(np.max(xItems)*0.75, np.max(yItems), "Samples: %.0f" %samples.size)
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.9, "Acceptance: %.2f" %acceptanceRate)
-    print samples
+    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.7, "Acceptance: %.2f" %acceptanceRate)
+    plt.axis('equal')
     plt.plot(xItems, yItems, linestyle="None", marker=".")
     plt.draw()
     plt.pause(0.00001)
