@@ -6,6 +6,7 @@ Created on 16.07.2014
 
 import numpy as np 
 import scipy.stats as stats
+import math 
 
 class UnivariateNormal(object):
 
@@ -60,6 +61,26 @@ class MultivariateNormal(object):
     
     def getStartPoint(self):
         return np.random.multivariate_normal(self.mean, self.covarianceMatrix)
+    
+class RegionalMultivariateNorm(object):
+    def __init__(self, mu, sigma):
+        self.mu = mu
+        self.sigma = sigma
+    
+    def getPDF(self, x):
+        size = len(x)
+        if size == len(self.mu) and (size, size) == self.sigma.shape:
+            det = np.linalg.det(self.sigma)
+            if det == 0:
+                raise NameError("The covariance matrix can't be singular")
+
+            norm_const = 1.0/ ( math.pow((2*np.pi),float(size)/2) * math.pow(det,1.0/2) )
+            x_mu = np.matrix(x -self.mu)
+            inv = np.linalg.inv(self.sigma)      
+            result = math.pow(math.e, -0.5 * (x_mu * inv * x_mu.T))
+            return norm_const * result
+        else:
+            raise NameError("The dimensions of the input don't match")
     
 
         
