@@ -57,23 +57,3 @@ def regionalAnimate2D(samplesA, samplesB, acceptanceRateA, acceptanceRateB, acce
     plt.plot(xItems, yItems, linestyle="None", marker=".")
     plt.draw()
     plt.pause(0.00001)
-    
-def animateParams(samplesA, samplesB, acceptedA, acceptedB, a, b):
-    plt.clf()
-    plt.title("Approximation")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    xItems = [x[0] for x in samplesA]
-    yItems = [x[1] for x in samplesA]
-    plt.text(np.max(xItems)*0.75, np.max(yItems), "Samples: %.0f" %(samplesA.size+samplesB.size))
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.3, "Param a: %.2f" %a)
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.4, "Param b: %.2f" %b)
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.5, "akzeptierte a: %.2f" %acceptedA)
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.6, "akzeptierte b: %.2f" %acceptedB)
-    plt.axis('equal')
-    plt.plot(xItems, yItems, linestyle="None", marker=".")
-    xItems = [x[0] for x in samplesB]
-    yItems = [x[1] for x in samplesB]
-    plt.plot(xItems, yItems, linestyle="None", marker=".")
-    plt.draw()
-    plt.pause(0.00001)

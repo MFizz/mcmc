@@ -40,8 +40,8 @@ class RegionalMetropolisHastings():
         aSamples = np.array([0])
         bSamples = np.array([0])
         # adaptive params a and b for two regions
-        a=0
-        b=0
+        a=-0.3
+        b=-0.13
         # number of 100 samples
         n=0
         # get a start point
@@ -95,7 +95,7 @@ class RegionalMetropolisHastings():
                     samplesB = np.append(samplesB, [x], axis=0)
                 acceptanceRateB = float(acceptedB)/samplesB.size
                         
-            if i % 100:
+            if i % 100 == 0:
                 n += 1  
                 a = self.delta(a,n,acceptanceRateA)
                 b = self.delta(b,n,acceptanceRateB)
