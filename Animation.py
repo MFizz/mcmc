@@ -43,7 +43,7 @@ def regionalAnimate2D(samplesA, samplesB, acceptanceRateA, acceptanceRateB, acce
     plt.ylabel("y")
     xItems = [x[0] for x in samplesA]
     yItems = [x[1] for x in samplesA]
-    plt.text(np.max(xItems)*0.75, np.max(yItems), "Samples: %.0f" %(samplesA.size+samplesB.size))
+    plt.text(np.max(xItems)*0.75, np.max(yItems), "Samples: %.0f" %(samplesA.shape[0]+samplesB.shape[0]))
     plt.text(np.max(xItems)*0.75, np.max(yItems)*0.1, "Acceptance for a: %.2f" %acceptanceRateA)
     plt.text(np.max(xItems)*0.75, np.max(yItems)*0.2, "Acceptance for b: %.2f" %acceptanceRateB)
     plt.text(np.max(xItems)*0.75, np.max(yItems)*0.3, "Param a: %.2f" %a)
