@@ -21,13 +21,18 @@ class MetropolisHastings():
     
     
     
-    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False):
+    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=1):
         accepted = 0
         # get a start point
         x = self.proposal.getStartPoint()
+        gibbsList = [[0,0] for dimension in x]
         samples = np.array([x])
         acceptanceWindow = 1000
+        covCalc = Utility.covarianceCalculator(x)
         
+        gibbsFactor = 1
+        if self.algorithm == Name.ADAPTIVE_GIBBS:
+            gibbsFactor = gibbsBatchSize * x.size
         
         if animateDistribution or animateStatistics:
             animationAx = None
@@ -45,9 +50,12 @@ class MetropolisHastings():
                 sampleX = []
                 acceptanceRates = []
                 if animateDistribution:
-                    fig = plt.figure(figsize=(20,8))
-                    animationAx = plt.subplot(121)
-                    statAx = plt.subplot(122)
+                    fig = plt.figure(figsize=(10,10))
+                    animationAx = plt.subplot(221)
+                    if dimensionality>1:
+                        animationAx2 = plt.subplot(222)
+                        Animation.animate2DReal(self.desired, animationAx2)
+                    statAx = plt.subplot(223)
                 else:
                     fig = plt.figure(figsize=(10,8))
                     statAx = plt.subplot(111)
@@ -57,41 +65,64 @@ class MetropolisHastings():
         for i in xrange(noOfSamples):
             # get a proposal and calulate the acceptance rate
             if self.randomWalk:
-                if self.algorithm == Name.ADAPTIVE_METROPOLIS_HASTINGS and self.samples > dimensionality/2.:
-                    x_new = self.proposal.getSample(x, sampleCovariance=Utility.getSampleCovariance(samples)*1./dimensionality)
+                if self.algorithm == Name.ADAPTIVE_METROPOLIS_HASTINGS and samples.shape[0] > dimensionality/2.:
+                    x_new = self.proposal.getSample(x, sampleCovariance=covCalc.getSampleCovariance(samples)* 1.38**2 * 1./dimensionality)
+                elif self.algorithm == Name.ADAPTIVE_GIBBS:
+                    x_new = self.proposal.getSample(x, samples.shape[0]%x.size)
                 else:
                     x_new = self.proposal.getSample(x)
                 acceptance = ( self.desired(x_new)/self.desired(x) )
             else:
-                x_new = self.proposal.getSample(None)
-                acceptance = ( self.desired(x_new)/self.desired(x) * self.proposal.getPDF(x,None)/self.proposal.getPDF(x_new,None) )
+                if self.algorithm == Name.ADAPTIVE_GIBBS:
+                    x_new = self.proposal.getSample(x)
+                    acceptance = ( self.desired(x_new)/self.desired(x) )
+                else:
+                    x_new = self.proposal.getSample(None)
+                    acceptance = ( self.desired(x_new)/self.desired(x) * self.proposal.getPDF(x,None)/self.proposal.getPDF(x_new,None) )
             
             # accept the new proposal or stick with the old one
             if acceptance > np.random.random():
                 x = x_new
-                accepted+=1
+                accepted+=1.
+                gibbsList[samples.shape[0]%x.size][0] += 1.
             else:
                 x = x
+            gibbsList[samples.shape[0]%x.size][1] += 1.
 
-            if dimensionality==1:
-                samples = np.append(samples, x)
-            else:
-                samples = np.append(samples, [x], axis=0)
+            if acceptance>0.0:
+                if dimensionality==1:
+                    samples = np.append(samples, x)
+                else:
+                    samples = np.append(samples, [x], axis=0)
             
-            if samples.size%acceptanceWindow !=0:
-                acceptanceRate = float(accepted)/(samples.size%acceptanceWindow)
+            if samples.shape[0]%acceptanceWindow !=0:
+                acceptanceRate = float(accepted)/(samples.shape[0]%acceptanceWindow)
             else:
+                sampleX.append(samples.shape[0])
+                acceptanceRates.append(acceptanceRate)
                 accepted = 0
+                
+            if self.algorithm==Name.ADAPTIVE_GIBBS and samples.shape[0]%gibbsFactor == 0:
+                self.proposal.adjust(gibbsList, samples.shape[0]/float(gibbsFactor))
+                gibbsList = [[0,0] for dimension in x]
             
             
-            if (animateDistribution or animateStatistics) and (i+2)%stepSize==0:
+            if (animateDistribution or animateStatistics) and (i+2)%(stepSize)==0:
+
                 if animateDistribution and dimensionality==1:
-                    Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate, animationAx)
+                    Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, animationAx)
                 if animateDistribution and dimensionality==2:
-                    Animation.animate2D(samples, acceptanceRate, animationAx)
+                    if self.algorithm == Name.ADAPTIVE_GIBBS:
+                        Animation.animate2D(samples, animationAx)
+                    else:
+                        Animation.animate2D(samples, animationAx)
+                        
                 if animateStatistics:
-                    sampleX.append(samples.size)
-                    acceptanceRates.append(acceptanceRate)
-                    Animation.animateStats(sampleX, acceptanceRates, statAx)
+                    if self.algorithm == Name.ADAPTIVE_GIBBS:
+                        Animation.animateStats(sampleX[::gibbsBatchSize], acceptanceRates[::gibbsBatchSize], statAx)
+                    else:
+                        Animation.animateStats(sampleX, acceptanceRates, statAx)
+                        
+                plt.pause(0.00001)
             
         

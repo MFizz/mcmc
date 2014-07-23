@@ -5,9 +5,10 @@ Created on 19.07.2014
 '''
 
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
 import numpy as np
 
-def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate, animationAx):
+def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, animationAx):
     animationAx.cla()
     animationAx.set_title("Approximation")
     animationAx.set_xlabel("x")
@@ -16,11 +17,10 @@ def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRat
     animationAx.plot(xDesired, pDesired)
     animationAx.set_xlim([-10,10])
     plt.draw()
-    plt.pause(0.00001)
     
     
 
-def animate2D(samples, acceptanceRate, animationAx):
+def animate2D(samples, animationAx):
     animationAx.cla()
     animationAx.set_title("Approximation")
     animationAx.set_xlabel("x")
@@ -28,10 +28,25 @@ def animate2D(samples, acceptanceRate, animationAx):
     xItems = [x[0] for x in samples]
     yItems = [x[1] for x in samples]
     animationAx.axis('equal')
-    animationAx.plot(xItems, yItems, linestyle="None", marker=".")
-    plt.draw()
-    plt.pause(0.00001) 
+   # animationAx.plot(xItems, yItems, linestyle="None", marker=".")
+    animationAx.hist2d(xItems, yItems,bins=50, norm=colors.LogNorm())
+    animationAx.set_xlim(-10,10)
+    animationAx.set_ylim(-10,10)
     
+    plt.draw()
+    
+
+def animate2DReal(function, ax):
+    xs = np.arange(-10,10.4,0.4)
+    ys = np.arange(-10,10.4,0.4)
+    densities = []
+    for x in xs:
+        for y in ys:
+            for i in xrange(int(10000*function([x,y]))):
+                densities.append([x,y])
+    xItems = [x[0] for x in densities]
+    yItems = [x[1] for x in densities]
+    ax.hist2d(xItems, yItems,bins=(xs,ys),  norm=colors.LogNorm())
     
     
 def animateStats(x, acceptanceRates, statAx):
@@ -41,7 +56,6 @@ def animateStats(x, acceptanceRates, statAx):
     statAx.set_ylabel("acceptance")
     statAx.set_ylim([0.,1.])
     statAx.plot(x,acceptanceRates)   
-    plt.pause(0.00001) 
 
     
     
