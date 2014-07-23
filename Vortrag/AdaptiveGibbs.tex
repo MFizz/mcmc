@@ -1,5 +1,80 @@
 
-\subsection{Adaptive Gibbs (Metropolis within Gibbs)}
+\subsection{Adaptive Metropolis Witin Gibbs}
 \begin{frame}
+\frametitle{Adaptive Metropolis Witin Gibbs}
+\begin{block}{Why do we need it?}
+\begin{itemize}
+\item high-dimensional target distributions
+\item dimensions with different variances
+\end{itemize}
+\end{block}
 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Witin Gibbs}
+
+\begin{block}{Ingredients}
+\begin{itemize}
+\item $f(x)$ : target density
+\item $x_0 \sim N(0_d, I_d)$ : start point
+\item $q(x|y)$ : proposal density
+\begin{itemize}
+  \item $i$th dimension is $ N(x_n[i], 10^{ls_i})$-distributed
+  \item $ls_i = 0$ initially
+\end{itemize}
+ \item $\alpha_i$ : individual acceptance rate for every dimension $i$
+\item $\delta(n) = min(0.01, n^{-0.5})$ : adaption increment
+\item $b$ : batch size, e.g. $b=50$
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Witin Gibbs}
+
+\begin{block}{Steps (1/2)}
+\begin{enumerate}
+  \item current sample : $x'$
+  \item[]
+\item choose dimension $i$ (one after another or randomly)
+\item $x^* = x'$
+\item $x^*_i = x^*_i + N(0, 10^{ls_i})$
+\item calculate acceptance $\alpha$:
+\[\alpha = min\left(1, \frac{f(x^*)}{f(x')} \right)\]
+
+\item accept proposal $x^*$ with probability $\alpha$
+\item update all $\alpha_i$
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Witin Gibbs}
+\begin{block}{Steps (2/2)}
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item update all $\alpha_i$
+\item if accepted: $x' = x^*$
+\item repeat for all dimensions ($d$ times)
+\item repeat $b$ times
+\item[]
+\item after $b\cdot d$ samples adapt for all dimensions $i$:
+\item if $\alpha_i > 0.44$ : $ls_i = ls_i + \delta(i)$
+\item if $\alpha_i < 0.44$ : $ls_i = ls_i - \delta(i)$
+\item $\alpha_i = 0$
+\item []
+\item adaption finished $\Rightarrow$ back to start
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Witin Gibbs}
+Example \ldots
 \end{frame}

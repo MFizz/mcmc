@@ -1,5 +1,63 @@
 
 \subsection{Metropolis Hastings}
-\begin{frame}
 
+
+\begin{frame}
+\frametitle{Metropolis Hastings}
+
+\begin{block}{Why do we need it?}
+\begin{itemize}
+\item target distribution $f(x)$ that we cannot directly sample from
+\item $X \sim c \cdot f(x)$, where $c$ is unknown
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Metropolis Hastings}
+
+\begin{block}{Why do we need it?}
+\begin{itemize}
+\item target distribution $f(x)$ that we cannot directly sample from
+\item $X \sim c \cdot f(x)$, where $c$ is unknown
+\end{itemize}
+\end{block}
+
+\begin{block}{Ingredients}
+\begin{itemize}
+\item $f(x)$ : target density
+\item $x_0$ : start point (random)
+\item $q(x|y)$ : proposal density, often $N(\mu, \Sigma)$ \\
+\item[] \quad \quad  \quad  \quad  ($\mu = y \Rightarrow$ ``Random Walk
+Metropolis Hastings'')
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Metropolis Hastings}
+
+\begin{block}{Steps}
+\begin{enumerate}
+  \item current sample : $x'$
+  \item[]
+\item sample $x^* \sim q(x | x')$
+\item calculate acceptance $\alpha$:
+\[\alpha = min\left(1, \frac{f(x^*)}{f(x')} \cdot
+\frac{q(x'|x^*)}{q(x^*|x')} \right)\]
+
+\item accept proposal $x^*$ with probability $\alpha$
+\item if accepted : $x' = x^*$
+\item repeat
+\end{enumerate}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Metropolis Hastings}
+Example \ldots
 \end{frame}

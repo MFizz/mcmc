@@ -1,5 +1,64 @@
 
 \subsection{Adaptive Metropolis Hastings}
 \begin{frame}
+\frametitle{Adaptive Metropolis Hastings}
+\begin{block}{Why do we need it?}
+\begin{itemize}
+\item If Metropolis Hastings has bad settings, the acceptance rate will be
+inferior!
+\item high-dimensional target distributions
+\item correlated dimensions with different variances
+\end{itemize}
+\end{block}
 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Hastings}
+
+\begin{block}{Ingredients}
+\begin{itemize}
+\item $f(x)$ : target density
+\item $x_0$ : start point (random)
+\item $q(x|y)\sim N(y, 0.1\cdot I_d / d)$ : proposal density
+\item[]
+\item $q'(x|y) \sim N(y, 2.38^2\cdot \Sigma_n /
+d)$ : ``adapting" proposal density
+\begin{itemize}
+  \item $2.38^2$ delivers the best results in certain environments
+  \item $\Sigma_n$ is the estimated covariance matrix of the current samples 
+\end{itemize}
+\item $\beta$ : adaption parameter, e.g. $\beta = 0.05$ 
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Hastings}
+
+\begin{block}{Steps}
+\begin{enumerate}
+  \item current sample : $x'$
+  \item[]
+\item if $n\leq 2d$ : sample $x^* \sim q(x | x')$
+\item if $n> 2d$ : sample $x^* \sim (1-\beta) \cdot q'(x | x') +
+\beta \cdot q(x | x')$
+\item calculate acceptance $\alpha$:
+\[\alpha = min\left(1, \frac{f(x^*)}{f(x')} \right)\]
+
+\item accept proposal $x^*$ with probability $\alpha$
+\item if accepted: $x' = x^*$
+\item repeat
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adaptive Metropolis Hastings}
+Example \ldots
 \end{frame}

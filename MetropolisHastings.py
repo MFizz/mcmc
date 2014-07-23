@@ -71,6 +71,7 @@ class MetropolisHastings():
                     
                 
 
+        # here we go
         for i in xrange(noOfSamples):
             # get a proposal and calulate the acceptance rate
             if self.randomWalk:
