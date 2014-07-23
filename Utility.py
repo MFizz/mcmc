@@ -32,12 +32,22 @@ def getSuboptimality(covarianceMatrix, realCovarianceMatrix):
         return 0
     dimensions = covarianceMatrix.shape[0]
     sum = 0
-    print sp.linalg.sqrtm(covarianceMatrix)
     eigenvalues, evectors = np.linalg.eig(sp.linalg.sqrtm(np.dot(np.matrix(covarianceMatrix),np.matrix(realCovarianceMatrix)**(-1))))
     bs = []
     for d in xrange(dimensions):
-        print [l**(-1) for l in eigenvalues[:d+1]]
         b = (d+1) * np.sum([l**(-2) for l in eigenvalues[:d+1]]) / np.sum([l**(-1) for l in eigenvalues[:d+1]])**2
         bs.append(b)
-        print b
     return np.mean(bs)
+
+def getACT(samples):
+    mean = np.mean(samples)
+    series = np.array(samples) - mean
+    d = np.sum([C(t, series) for t in range(len(series)-1)])
+    print d, C(0,series)
+    act = d/C(0,series)
+    return act
+    
+def C(t, series):
+ #   c = 1./(series.size-t) * np.sum([series[s+t]*series[s] for s in xrange(series.size-t)])
+    c = 1./(len(series)-t) * np.sum([np.corrcoef(series[s+t],series[s]) for s in xrange(len(series)-t)])
+    return c

@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.26pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Markov Chain Monte Carlo}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Why adaptive?}{5}{0}{1}
+\beamer@sectionintoc {2}{Methods}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Metropolis Hastings}{7}{0}{2}
+\beamer@subsectionintoc {2}{2}{Adaptive Metropolis Hastings}{9}{0}{2}
+\beamer@subsectionintoc {2}{3}{Adaptive Gibbs (Metropolis within Gibbs)}{11}{0}{2}
+\beamer@subsectionintoc {2}{4}{Regional Metropolis Hastings}{13}{0}{2}
+\beamer@sectionintoc {3}{Summary}{15}{0}{3}

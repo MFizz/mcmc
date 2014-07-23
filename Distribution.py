@@ -130,13 +130,13 @@ class AdaptiveGibbsProposal(object):
                 acceptance = list[i][0] / list[i][1]
             else:
                 acceptance = 0
-            print i, self.logVariance[i], acceptance
+           # print i, self.logVariance[i], acceptance
             if acceptance > 0.44:
                 self.logVariance[i] += delta
             elif acceptance < 0.44:
                 self.logVariance[i] -= delta
             
-            print "to", self.logVariance[i]
+           # print "to", self.logVariance[i]
     
     
 class CoercedAcceptanceProposal(object):
