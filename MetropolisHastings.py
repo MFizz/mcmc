@@ -21,20 +21,38 @@ class MetropolisHastings():
     
     
     
-    def start(self, noOfSamples, animate, stepSize, dimensionality):
+    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False):
         accepted = 0
         # get a start point
         x = self.proposal.getStartPoint()
         samples = np.array([x])
+        acceptanceWindow = 1000
         
-        if animate:
+        
+        if animateDistribution or animateStatistics:
+            animationAx = None
+            statAx = None
             plt.ion()
-            if dimensionality==1:
+            if animateDistribution and not animateStatistics:
+                fig = plt.figure(figsize=(10,8))
+                animationAx = plt.subplot(111)
+            if animateDistribution and dimensionality==1:
                 xDesired = np.arange(-10, 10, 0.1)
                 pDesired = self.desired(xDesired)
                 binSize = 0.25
                 binBoundaries = np.arange(-10,10,binSize)
-
+            if animateStatistics:
+                sampleX = []
+                acceptanceRates = []
+                if animateDistribution:
+                    fig = plt.figure(figsize=(20,8))
+                    animationAx = plt.subplot(121)
+                    statAx = plt.subplot(122)
+                else:
+                    fig = plt.figure(figsize=(10,8))
+                    statAx = plt.subplot(111)
+                    
+                
 
         for i in xrange(noOfSamples):
             # get a proposal and calulate the acceptance rate
@@ -59,14 +77,21 @@ class MetropolisHastings():
                 samples = np.append(samples, x)
             else:
                 samples = np.append(samples, [x], axis=0)
-                
-            acceptanceRate = float(accepted)/samples.size
+            
+            if samples.size%acceptanceWindow !=0:
+                acceptanceRate = float(accepted)/(samples.size%acceptanceWindow)
+            else:
+                accepted = 0
             
             
-            if animate and (i+2)%stepSize==0:
-                if dimensionality==1:
-                    Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate)
-                if dimensionality==2:
-                    Animation.animate2D(samples, acceptanceRate)
+            if (animateDistribution or animateStatistics) and (i+2)%stepSize==0:
+                if animateDistribution and dimensionality==1:
+                    Animation.animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate, animationAx)
+                if animateDistribution and dimensionality==2:
+                    Animation.animate2D(samples, acceptanceRate, animationAx)
+                if animateStatistics:
+                    sampleX.append(samples.size)
+                    acceptanceRates.append(acceptanceRate)
+                    Animation.animateStats(sampleX, acceptanceRates, statAx)
             
         

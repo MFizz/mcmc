@@ -7,34 +7,43 @@ Created on 19.07.2014
 import matplotlib.pyplot as plt
 import numpy as np
 
-def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate):
-    plt.clf()
-    plt.title("Approximation")
-    plt.xlabel("x")
-    plt.ylabel("f(x)")
-    plt.hist(samples, bins=binBoundaries, weights=np.zeros_like(samples) + (1. / samples.size / binSize))
-    plt.plot(xDesired, pDesired)
-    plt.xlim([-10,10])
-    plt.text(5, np.max(pDesired-0.05), "Samples: %.0f" %samples.size)
-    plt.text(5, np.max(pDesired), "Acceptance: %.2f" %acceptanceRate)
+def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, acceptanceRate, animationAx):
+    animationAx.cla()
+    animationAx.set_title("Approximation")
+    animationAx.set_xlabel("x")
+    animationAx.set_ylabel("f(x)")
+    animationAx.hist(samples, bins=binBoundaries, weights=np.zeros_like(samples) + (1. / samples.size / binSize))
+    animationAx.plot(xDesired, pDesired)
+    animationAx.set_xlim([-10,10])
     plt.draw()
     plt.pause(0.00001)
     
     
 
-def animate2D(samples, acceptanceRate):
-    plt.clf()
-    plt.title("Approximation")
-    plt.xlabel("x")
-    plt.ylabel("y")
+def animate2D(samples, acceptanceRate, animationAx):
+    animationAx.cla()
+    animationAx.set_title("Approximation")
+    animationAx.set_xlabel("x")
+    animationAx.set_ylabel("y")
     xItems = [x[0] for x in samples]
     yItems = [x[1] for x in samples]
-    plt.text(np.max(xItems)*0.75, np.max(yItems), "Samples: %.0f" %samples.size)
-    plt.text(np.max(xItems)*0.75, np.max(yItems)*0.7, "Acceptance: %.2f" %acceptanceRate)
-    plt.axis('equal')
-    plt.plot(xItems, yItems, linestyle="None", marker=".")
+    animationAx.axis('equal')
+    animationAx.plot(xItems, yItems, linestyle="None", marker=".")
     plt.draw()
-    plt.pause(0.00001)
+    plt.pause(0.00001) 
+    
+    
+    
+def animateStats(x, acceptanceRates, statAx):
+    statAx.cla()
+    statAx.set_title("Acceptance Rate")
+    statAx.set_xlabel("sample")
+    statAx.set_ylabel("acceptance")
+    statAx.set_ylim([0.,1.])
+    statAx.plot(x,acceptanceRates)   
+    plt.pause(0.00001) 
+
+    
     
 def regionalAnimate2D(samplesA, samplesB, acceptanceRateA, acceptanceRateB, acceptedA, acceptedB, a, b):
     plt.clf()
