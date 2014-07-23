@@ -85,7 +85,7 @@ class RegionalMetropolisHastings():
                     samplesA = np.append(samplesA, x)
                 else:
                     samplesA = np.append(samplesA, [x], axis=0)
-                acceptanceRateA = float(acceptedA)/samplesA.size
+                acceptanceRateA = float(acceptedA)/samplesA.shape[0]
             elif propB:
                 if acceptance > np.random.random():
                     acceptedB+=1
@@ -93,7 +93,7 @@ class RegionalMetropolisHastings():
                     samplesB = np.append(samplesB, x)
                 else:
                     samplesB = np.append(samplesB, [x], axis=0)
-                acceptanceRateB = float(acceptedB)/samplesB.size
+                acceptanceRateB = float(acceptedB)/samplesB.shape[0]
                         
             if i % 100 == 0:
                 n += 1  
