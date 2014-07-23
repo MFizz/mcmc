@@ -5,6 +5,7 @@ Created on 19.07.2014
 '''
 
 import numpy as np
+import scipy as sp
 
 def getSampleCovariance(samples):
     samples = samples.transpose()
@@ -25,3 +26,18 @@ class covarianceCalculator(object):
         self.mean = self.mean + 1./(samples.shape[0]-1) * (lastSample - self.mean)
         self.covariance = self.covariance + 1./(samples.shape[0]-1) * ( np.dot((lastSample - self.mean) , (lastSample - self.mean).transpose()) - self.covariance)
         return self.covariance
+    
+def getSuboptimality(covarianceMatrix, realCovarianceMatrix):
+    if realCovarianceMatrix == None:
+        return 0
+    dimensions = covarianceMatrix.shape[0]
+    sum = 0
+    print sp.linalg.sqrtm(covarianceMatrix)
+    eigenvalues, evectors = np.linalg.eig(sp.linalg.sqrtm(np.dot(np.matrix(covarianceMatrix),np.matrix(realCovarianceMatrix)**(-1))))
+    bs = []
+    for d in xrange(dimensions):
+        print [l**(-1) for l in eigenvalues[:d+1]]
+        b = (d+1) * np.sum([l**(-2) for l in eigenvalues[:d+1]]) / np.sum([l**(-1) for l in eigenvalues[:d+1]])**2
+        bs.append(b)
+        print b
+    return np.mean(bs)
