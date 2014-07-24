@@ -46,7 +46,7 @@ def getACT(samples):
     mean = np.mean(samples, axis=0)
     var = np.var(samples, axis=0)
     for j in xrange(d):
-        for i in xrange(n):
+        for i in xrange(100):
             act += autocorr(i, n, mean[j], var[j], [x[j] for x in samples])
     return (act*2+d)/d
     
