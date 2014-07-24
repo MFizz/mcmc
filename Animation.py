@@ -7,6 +7,7 @@ Created on 19.07.2014
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import numpy as np
+import math
 
 def animate1D(samples, binBoundaries, binSize, xDesired, pDesired, animationAx):
     animationAx.cla()
@@ -42,7 +43,12 @@ def animate2DReal(function, ax):
     densities = []
     for x in xs:
         for y in ys:
-            for i in xrange(int(10000*function([x,y]))):
+            times = 10000*function([x,y])
+            if math.isnan(times):
+                times = 0
+            else:
+                times = int(times)
+            for i in xrange(times):
                 densities.append([x,y])
     xItems = [x[0] for x in densities]
     yItems = [x[1] for x in densities]

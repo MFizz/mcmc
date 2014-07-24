@@ -21,7 +21,7 @@ class MetropolisHastings():
     
     
     
-    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=1, desiredCovarianceMatrix=None):
+    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=1, desiredCovarianceMatrix=None, ACT=True):
         accepted = 0
         # get a start point
         x = self.proposal.getStartPoint()
@@ -122,7 +122,10 @@ class MetropolisHastings():
                 acceptanceRates.append(acceptanceRate)
                 accepted = 0
                 suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
-                act.append(Utility.getACT(samples[-5000:]))
+                if ACT:
+                    act.append(Utility.getACT(samples[-5000:]))
+                else:
+                    act.append(0)
                 asjdList.append(asjd)
                # act.append(69)
                 
@@ -142,5 +145,5 @@ class MetropolisHastings():
                     Animation.animateStats(sampleX, acceptanceRates, acceptanceRateAx, suboptimality, suboptimalityAx, act, actAx, asjdList, asjdAx)
                         
                 plt.pause(0.00001)
-            
-        
+        plt.ioff()
+        plt.show()
