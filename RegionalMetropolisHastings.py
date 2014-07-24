@@ -40,8 +40,8 @@ class RegionalMetropolisHastings():
         aSamples = np.array([0])
         bSamples = np.array([0])
         # adaptive params a and b for two regions
-        a=-0.3
-        b=-0.13
+        a=0
+        b=0
         # number of 100 samples
         n=0
         # get a start point
@@ -56,22 +56,25 @@ class RegionalMetropolisHastings():
             
             acceptance = 0
             
+            #if self.desired.one.getPDF(x) <= self.desired.two.getPDF(x):
             if np.linalg.norm(x) <= dimensionality:
                 propA = True
                 x_new = np.random.multivariate_normal(x, np.identity(dimensionality)*np.exp(2*a))
+                #if self.desired.one.getPDF(x_new) <= self.desired.two.getPDF(x_new): 
                 if np.linalg.norm(x_new) <= dimensionality:
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) 
+                    acceptance = self.desired.getPDF(x_new)/self.check(self.desired.getPDF(x)) 
                 else:
                     
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) * np.exp(dimensionality*(a-b)-0.5*np.dot(x,x_new)*(np.exp(-2*b)-np.exp(-2*a)))
+                    acceptance = self.desired.getPDF(x_new)/self.check(self.desired.getPDF(x)) * np.exp(dimensionality*(a-b)-0.5*np.dot(x,x_new)*(np.exp(-2*b)-np.exp(-2*a)))
             else: 
                 propB = True
                 x_new = np.random.multivariate_normal(x, np.identity(dimensionality)*np.exp(2*b))
+                #if self.desired.one.getPDF(x_new) > self.desired.two.getPDF(x_new): 
                 if np.linalg.norm(x_new) > dimensionality:
                     
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) 
+                    acceptance = self.desired.getPDF(x_new)/self.check(self.desired.getPDF(x)) 
                 else:
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) * np.exp(dimensionality*(b-a)-0.5*np.dot(x,x_new)*(np.exp(-2*a)-np.exp(-2*b)))
+                    acceptance = self.desired.getPDF(x_new)/self.check(self.desired.getPDF(x)) * np.exp(dimensionality*(b-a)-0.5*np.dot(x,x_new)*(np.exp(-2*a)-np.exp(-2*b)))
                 
             acceptance = min(1,acceptance);
             
@@ -96,6 +99,7 @@ class RegionalMetropolisHastings():
                 acceptanceRateB = float(acceptedB)/samplesB.shape[0]
                         
             if i % 100 == 0:
+                
                 n += 1  
                 a = self.delta(a,n,acceptanceRateA)
                 b = self.delta(b,n,acceptanceRateB)

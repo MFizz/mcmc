@@ -90,6 +90,19 @@ def arbitraryPDF(x):
     else:
         return 0.0000000000000000000000000000001
 
+class GaussianMixture(object):
+    def __init__(self, mu, sigma, muTwo, sigmaTwo):
+        self.one = RegionalMultivariateNorm(mu, sigma)
+        self.two = RegionalMultivariateNorm(muTwo, sigmaTwo)
+    
+    def getOne(self):
+        return self.one
+    
+    def getTwo(self):
+        return self.two
+        
+    def getPDF(self, x):
+        return self.one.getPDF(x)+self.two.getPDF(x)
         
 class AdaptiveMHProposal(object):
 

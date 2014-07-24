@@ -6,9 +6,13 @@ import Distribution
 import numpy as np
 
 dimensionality = 2
+desiredMeanOne = np.array(np.zeros(dimensionality))
+desiredMeanTwo = np.array(np.zeros(dimensionality))
+desiredCovOne = np.identity(dimensionality)
+desiredCovTwo = np.identity(dimensionality)
 
 if __name__ == '__main__':
     
-    desired = Distribution.RegionalMultivariateNorm(np.array(np.zeros(dimensionality)), np.identity(dimensionality))
-    problem = RMH.RegionalMetropolisHastings(Name.REGIONAL_ADAPTIVE_METROPOLIS_HASTINGS, lambda x: desired.getPDF(x))
+    desired = Distribution.GaussianMixture(desiredMeanOne, desiredCovOne, desiredMeanTwo, desiredCovTwo)
+    problem = RMH.RegionalMetropolisHastings(Name.REGIONAL_ADAPTIVE_METROPOLIS_HASTINGS,desired)
     problem.start(noOfSamples=10000000, animate=True, stepSize=100, dimensionality=dimensionality)
