@@ -5,6 +5,7 @@ Created on 16.07.2014
 '''
 
 import numpy as np 
+import scipy.stats as stats
 import math 
 
 class UnivariateNormal(object):
