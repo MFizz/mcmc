@@ -42,13 +42,15 @@
 \frametitle{Criteria}
 \begin{block}{autocorrelation time}
 \begin{itemize}
-  \item 
+  \item $ACT = 1 + 2\sum_{i=1}^{\infty} autocorr(i)$
+  \item $autocorr(k) = 1/((n-k)\cdot v)\cdot 
+  \sum_{t=1}^{n-k}(x^t-\mu)(x^{t+k}-\mu)$
 \end{itemize}
 
 \end{block}
 \begin{block}{average squared jump distance}
 \begin{itemize}
-  \item 
+  \item $ASJD = \sum_{k=1}^\infty \sqrt{\sum_{i=0}^d (x_{(i)}^k-x_{(i)}^{k+1})^2}$
 \end{itemize}
 
 \end{block}

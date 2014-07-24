@@ -32,7 +32,8 @@ class MetropolisHastings():
         covCalc = Utility.covarianceCalculator(x)
         suboptimality = []
         act = []
-        
+        asjdList = []
+        asjd = 0
         
         gibbsFactor = 1
         if self.algorithm == Name.ADAPTIVE_GIBBS:
@@ -55,19 +56,21 @@ class MetropolisHastings():
                 sampleX = []
                 acceptanceRates = []
                 if animateDistribution:
-                    fig = plt.figure(figsize=(15,10))
+                    fig = plt.figure(figsize=(18,10))
                     animationAx = plt.subplot(231)
                     if dimensionality>1:
                         animationAx2 = plt.subplot(232)
                         Animation.animate2DReal(self.desired, animationAx2)
-                    acceptanceRateAx = plt.subplot(234)
-                    suboptimalityAx = plt.subplot(235)
-                    actAx = plt.subplot(236)
+                    acceptanceRateAx = plt.subplot(233)
+                    suboptimalityAx = plt.subplot(234)
+                    actAx = plt.subplot(235)
+                    asjdAx = plt.subplot(236)
                 else:
-                    fig = plt.figure(figsize=(20,8))
-                    acceptanceRateAx = plt.subplot(131)
-                    suboptimalityAx = plt.subplot(132)
-                    actAx = plt.subplot(133)
+                    fig = plt.figure(figsize=(10,10))
+                    acceptanceRateAx = plt.subplot(221)
+                    suboptimalityAx = plt.subplot(222)
+                    actAx = plt.subplot(223)
+                    asjdAx = plt.subplot(224)
                     
                 
 
@@ -92,15 +95,16 @@ class MetropolisHastings():
             
             # accept the new proposal or stick with the old one
             if acceptance > np.random.random():
+                asjd = (asjd*(samples.shape[0]-1) + np.linalg.norm(x-x_new)) / samples.shape[0]
                 x = x_new
                 accepted+=1.
                 if self.algorithm == Name.ADAPTIVE_GIBBS:
                     gibbsList[samples.shape[0]%x.size][0] += 1.
             else:
                 x = x
+                asjd = (asjd*(samples.shape[0]-1)) / samples.shape[0]
             if self.algorithm == Name.ADAPTIVE_GIBBS:
                 gibbsList[samples.shape[0]%x.size][1] += 1.
-            
             
             # do not take it as a sample when it is absolutely impossible to generate from the desired distribution
             if acceptance>0.0:
@@ -113,13 +117,14 @@ class MetropolisHastings():
             # calculate stats
             if samples.shape[0]%acceptanceWindow !=0:
                 acceptanceRate = float(accepted)/(samples.shape[0]%acceptanceWindow)
-            else:
+            elif animateStatistics:
                 sampleX.append(samples.shape[0])
                 acceptanceRates.append(acceptanceRate)
                 accepted = 0
                 suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
-              #  act.append(Utility.getACT(samples[-1000:]))
-                act.append(69)
+                act.append(Utility.getACT(samples[-500:]))
+                asjdList.append(asjd)
+               # act.append(69)
                 
             if self.algorithm==Name.ADAPTIVE_GIBBS and samples.shape[0]%gibbsFactor == 0:
                 self.proposal.adjust(gibbsList, samples.shape[0]/float(gibbsFactor))
@@ -134,7 +139,7 @@ class MetropolisHastings():
                     Animation.animate2D(samples, animationAx)
                         
                 if animateStatistics:
-                    Animation.animateStats(sampleX, acceptanceRates, acceptanceRateAx, suboptimality, suboptimalityAx, act, actAx)
+                    Animation.animateStats(sampleX, acceptanceRates, acceptanceRateAx, suboptimality, suboptimalityAx, act, actAx, asjdList, asjdAx)
                         
                 plt.pause(0.00001)
             

@@ -40,14 +40,24 @@ def getSuboptimality(covarianceMatrix, realCovarianceMatrix):
     return np.mean(bs)
 
 def getACT(samples):
-    mean = np.mean(samples)
-    series = np.array(samples) - mean
-    d = np.sum([C(t, series) for t in range(len(series)-1)])
-    print d, C(0,series)
-    act = d/C(0,series)
-    return act
+    act = 0
+    n = samples.shape[0]
+    d = samples.shape[1]
+    mean = np.mean(samples, axis=0)
+    var = np.var(samples, axis=0)
+    for j in xrange(d):
+        for i in xrange(n):
+            act += autocorr(i, n, mean[j], var[j], [x[j] for x in samples])
+    return (act*2+d)/d
     
-def C(t, series):
- #   c = 1./(series.size-t) * np.sum([series[s+t]*series[s] for s in xrange(series.size-t)])
-    c = 1./(len(series)-t) * np.sum([np.corrcoef(series[s+t],series[s]) for s in xrange(len(series)-t)])
-    return c
+def autocorr(k, n, mean, var, samples):
+    sum = 0
+    for t in xrange(n-k):
+       # print mean, samples[t], samples[t+k], samples[t]-mean, samples[t+k]-mean, max(samples), min(samples)
+        sum += (samples[t]-mean)*(samples[t+k]-mean)
+    #print 1./((n-k)*var), sum,1./((n-k)*var) * sum
+    return 1./((n-k)*var) * sum
+
+def getASJD():
+    pass
+    

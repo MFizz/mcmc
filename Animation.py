@@ -49,7 +49,7 @@ def animate2DReal(function, ax):
     ax.hist2d(xItems, yItems,bins=(xs,ys),  norm=colors.LogNorm())
     
     
-def animateStats(x, acceptanceRates, acceptanceAx, suboptimality, suboptimalityAx, act, actAx):
+def animateStats(x, acceptanceRates, acceptanceAx, suboptimality, suboptimalityAx, act, actAx, asjd, asjdAx):
     acceptanceAx.cla()
     acceptanceAx.set_title("Acceptance Rate")
     acceptanceAx.set_xlabel("sample")
@@ -72,6 +72,14 @@ def animateStats(x, acceptanceRates, acceptanceAx, suboptimality, suboptimalityA
     actAx.set_ylabel("ACT")
   #  acceptanceAx.set_ylim([0.,1.])
     actAx.plot(x, act)
+    
+    
+    asjdAx.cla()
+    asjdAx.set_title("ASJD")
+    asjdAx.set_xlabel("sample")
+    asjdAx.set_ylabel("ASJD")
+  #  acceptanceAx.set_ylim([0.,1.])
+    asjdAx.plot(x, asjd)
 
     
     

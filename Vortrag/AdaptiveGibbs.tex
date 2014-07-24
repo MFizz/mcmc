@@ -21,7 +21,7 @@
 \item $x_0 \sim N(0_d, I_d)$ : start point
 \item $q(x|y)$ : proposal density
 \begin{itemize}
-  \item $i$th dimension is $ N(x_n[i], 10^{ls_i})$-distributed
+  \item $i$th dimension is $ N(x_{(i)}^n, 10^{ls_i})$-distributed
   \item $ls_i = 0$ initially
 \end{itemize}
  \item $\alpha_i$ : individual acceptance rate for every dimension $i$
@@ -44,7 +44,7 @@
   \item[]
 \item choose dimension $i$ (one after another or randomly)
 \item $x^* = x'$
-\item $x^*_i = x^*_i + N(0, 10^{ls_i})$
+\item $x^*_{(i)} = x^*_{(i)} + N(0, 10^{ls_i})$
 \item calculate acceptance $\alpha$:
 \[\alpha = min\left(1, \frac{f(x^*)}{f(x')} \right)\]
 
