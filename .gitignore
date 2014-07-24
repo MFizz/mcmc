@@ -1,1 +1,7 @@
-.pyc
+*.pyc
+*.pdf
+*.log
+*.aux
+*.synctex.gz
+*.toc
+*.dvi

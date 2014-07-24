@@ -1,6 +1,5 @@
 import MetropolisHastings as MH
 import RegionalMetropolisHastings as RMH
-import scipy.stats as stats
 import Name
 import Distribution
 import numpy as np
@@ -8,7 +7,7 @@ import numpy as np
 dimensionality = 2
 desiredMeanOne = np.array(np.zeros(dimensionality))
 desiredMeanTwo = np.array(np.zeros(dimensionality))
-desiredCovOne = np.identity(dimensionality)
+desiredCovOne = np.identity(dimensionality)*3
 desiredCovTwo = np.identity(dimensionality)
 
 if __name__ == '__main__':

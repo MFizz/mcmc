@@ -1,5 +1,108 @@
 
 \subsection{Regional Metropolis Hastings}
 \begin{frame}
+\frametitle{Regional Metropolis Hastings}
+\begin{block}{Why do we need it?}
+\begin{itemize}
+\item target distribution is multimodal with different relative mass
+\item no "universal" good proposal
+\item need to adapt to different regions of the state space
+\end{itemize}
+\end{block}
+\end{frame}
 
-\end{frame} 
+\begin{frame}
+\begin{block}{Ingredients}
+\begin{itemize}
+\item $f(x)$ : target density\\
+consisting of different high probability regions
+\item $\chi = \chi_1 \stackrel{\cdot}{\cup} \chi_2 \stackrel{\cdot}{\cup}$ ... disjoint partitions of the state space 
+\item $Q_i(x,\cdot) = N(x, exp(2a_i))$: individual proposals for every region\\
+$x \in \chi_i \rightarrow \sigma^2_x = e^{2a_i}$ and $y \in \chi_j \rightarrow \sigma^2_y e^{2a_j}$
+\item $x_0$ : start point (random)
+\item $\alpha_i$ : individual acceptance rate for every region
+\item $a_i$ : individual learning parameters for every region
+\item $\delta(n)$ adaption method for these parameters
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Segmentation}
+\begin{itemize}
+\item for Segmentation either use
+\begin{itemize}
+\item $S_k = {x: argmax N(x;\mu_k,\Sigma_k) = k}$ 
+or
+\item predefined segments by experimentation\\
+\end{itemize}
+\item seldom enough knowledge to perfectly separate\\
+
+\item to compensate the proposal integrates all $Q_i$
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\begin{block}{Proposals}
+\begin{itemize}
+\item the resulting proposal\\
+
+$Q_i(x,\cdot) = \Sigma_{i=1}^n 1_{\chi_i}(x)[\Sigma_{j=1}^n\lambda_j^{(i)}N(x, exp(2a_j))] $\\
+where $\Sigma \lambda_j^{(i)} = 1 $
+\item adaption parameter are chosen to reflect which proposal is more appropriate in this region
+
+\item proposal for $\lambda_j^{(i)} = \frac{k_j^{(i)}(t)}{\Sigma_{h=1}^{(n)}k_h^{(i)}(t)}$\\ 
+where $k_j^{(i)}$ is \# accepted states up to time $t$
+\item this would favor small steps so we integrate the average squared jump distance $d_j^{(i)}$
+\[
+   \lambda_j^{(i)}= 
+\begin{cases}
+    \frac{d_j^{(i)}(t)}{\Sigma_{h=1}^{(n)}d_h^{(i)}(t)},& if \Sigma_{h=1}^{(n)}d_h^{(i)}(t) > 0\\
+    1/2,              & otherwise
+\end{cases}
+\]
+
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\begin{block}{acceptance rate}
+\begin{itemize}
+\item individual acceptance rates for every region depending on region-traversing:
+for example with to regions:
+\[
+   \alpha(x,y)=min 1, 
+\begin{cases}
+    \frac{f(y)}{f(x)},& if x,y \in \chi_i\\
+    \frac{f(y)Q_1(x|y)}{f(x)Q_2(y|x)},  & if x \in S_2,y \in S_1\\
+    \frac{f(y)Q_2(x|y)}{f(x)Q_1(y|x)},  & if x \in S_1,y \in S_2
+\end{cases}
+\]
+\item or more specific:\\
+$\alpha(x,y)  = min[1,\frac{f(y)}{f(x)} exp(d(a_x-a_y)-\frac{1}{2}(x-y)^2[exp(-2a_j)-exp(-2a_i)])]$
+where $d$ denotes the dimensionality of f(x)
+
+
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\begin{block}{delta function}
+\begin{itemize} 
+\item the theoretic ideal acceptance rate in higher dimensions is 0.234
+\item to achieve ideal acceptance rate we adapt $a_i$ for every region after 100 samples
+\item proposal for $/delta(n)$ where $n$ is the $n^{th}$ batch of 100 samples:\\
+$\delta(n) = min(0.01,n^{-1/2}$
+\item if after 100 samples real acceptance rate $>$ ideal the relevant parameter is increased by $\delta(n)$
+\item if acceptance rate $<$ ideal it is decreased
+\item if there where no proposals in for this region in the entire badge it will not be altered 
+\end{itemize}
+\end{block}
+\end{frame}
