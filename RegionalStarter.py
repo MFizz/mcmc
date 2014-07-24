@@ -14,5 +14,5 @@ desiredCovTwo = np.identity(dimensionality)
 if __name__ == '__main__':
     
     desired = Distribution.GaussianMixture(desiredMeanOne, desiredCovOne, desiredMeanTwo, desiredCovTwo)
-    problem = RMH.RegionalMetropolisHastings(Name.REGIONAL_ADAPTIVE_METROPOLIS_HASTINGS,desired)
-    problem.start(noOfSamples=10000000, animate=True, stepSize=100, dimensionality=dimensionality)
+    problem = RMH.RegionalMetropolisHastings(Name.REGIONAL_ADAPTIVE_METROPOLIS_HASTINGS,lambda x: desired.getPDF(x))
+    problem.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True)
