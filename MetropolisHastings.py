@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import Animation
 import Utility
+import math
 
 class MetropolisHastings():
 
@@ -21,10 +22,13 @@ class MetropolisHastings():
     
     
     
-    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=1, desiredCovarianceMatrix=None, ACT=True):
+    def start(self, noOfSamples, stepSize, dimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=1, desiredCovarianceMatrix=None, ACT=True, subopt=True):
         accepted = 0
         # get a start point
         x = self.proposal.getStartPoint()
+        while not self.desired(x) > 0:
+            x = self.proposal.getStartPoint()
+            
         samples = np.array([x])
         
         # stats variables
@@ -34,6 +38,8 @@ class MetropolisHastings():
         act = []
         asjdList = []
         asjd = 0
+        acceptanceRates = []
+        sampleX = []
         
         gibbsFactor = 1
         if self.algorithm == Name.ADAPTIVE_GIBBS:
@@ -53,8 +59,6 @@ class MetropolisHastings():
                 binSize = 0.25
                 binBoundaries = np.arange(-10,10,binSize)
             if animateStatistics:
-                sampleX = []
-                acceptanceRates = []
                 if animateDistribution:
                     fig = plt.figure(figsize=(18,10))
                     animationAx = plt.subplot(231)
@@ -84,7 +88,14 @@ class MetropolisHastings():
                     x_new = self.proposal.getSample(x, samples.shape[0]%x.size)
                 else:
                     x_new = self.proposal.getSample(x)
-                acceptance = ( self.desired(x_new)/self.desired(x) )
+                div1 = self.desired(x_new)
+                div2 = self.desired(x)
+                if not div1 >= 0 or math.isnan(div1):
+                    div1 = 0.
+                if not div2 >0 or math.isnan(div2):
+                    div2 = 0.0001
+               # print div1, div2
+                acceptance = ( float(self.desired(x_new))/float(self.desired(x)) )
             else:
                 if self.algorithm == Name.ADAPTIVE_GIBBS:
                     x_new = self.proposal.getSample(x, samples.shape[0]%x.size)
@@ -115,19 +126,27 @@ class MetropolisHastings():
             
             
             # calculate stats
+            #if dimensionality<3:
             if samples.shape[0]%acceptanceWindow !=0:
                 acceptanceRate = float(accepted)/(samples.shape[0]%acceptanceWindow)
-            elif animateStatistics:
-                sampleX.append(samples.shape[0])
+               # print i,acceptanceRate
+            else:
+                print i, acceptanceRate
                 acceptanceRates.append(acceptanceRate)
                 accepted = 0
-                suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
-                if ACT:
-                    act.append(Utility.getACT(samples[-5000:]))
-                else:
-                    act.append(0)
-                asjdList.append(asjd)
-               # act.append(69)
+                if animateStatistics:
+                    sampleX.append(samples.shape[0])
+                    if subopt:
+                        suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
+                    else:
+                        suboptimality.append(0)
+                    if ACT:
+                        act.append(Utility.getACT(samples[-5000:]))
+                    else:
+                        act.append(0)
+                    asjdList.append(asjd)
+                       # act.append(69)
+            
                 
             if self.algorithm==Name.ADAPTIVE_GIBBS and samples.shape[0]%gibbsFactor == 0:
                 self.proposal.adjust(gibbsList, samples.shape[0]/float(gibbsFactor))
@@ -145,5 +164,24 @@ class MetropolisHastings():
                     Animation.animateStats(sampleX, acceptanceRates, acceptanceRateAx, suboptimality, suboptimalityAx, act, actAx, asjdList, asjdAx)
                         
                 plt.pause(0.00001)
+        
+        if dimensionality > 2:
+            acceptanceRate = acceptanceRates[-1]
+            if ACT:
+                act = Utility.getACT(samples)
+            else:
+                act = 0
+            if subopt:
+                suboptimality = Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix)
+            else:
+                suboptimality = 0
+            asjd = asjd
+            print self.algorithm
+            print "acc: ", acceptanceRate
+            print "mean acc: ", np.mean(acceptanceRates)
+            print "subopt: ", suboptimality
+            print "act: ", act
+            print "asjd", asjd
+        
         plt.ioff()
         plt.show()

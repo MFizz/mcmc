@@ -59,7 +59,12 @@ class MultivariateNormal(object):
             return 1/( (2*np.pi)**(self.mean.shape[0]/2) * np.linalg.det(self.covarianceMatrix)**0.5 ) * np.e**(np.dot(np.dot( -0.5*np.transpose((value-self.mean)), np.linalg.inv(self.covarianceMatrix)), (value-self.mean)) )
         else:
             return 1/( (2*np.pi)**(currentValue.shape[0]/2) * np.linalg.det(self.covarianceMatrix)**0.5 ) * np.e**(np.dot(np.dot( -0.5*np.transpose((value-currentValue)), np.linalg.inv(self.covarianceMatrix)), (value-currentValue)) )
-    
+            '''
+    def getPDF(self, r, currentValue):
+        dim  = r.shape[-1]
+        dev  = r - self.mean
+        maha = np.einsum('...k,...kl,...l->...', dev, np.linalg.pinv(self.covarianceMatrix), dev)
+        return (2 * np.pi)**(-0.5 * dim) * np.linalg.det(self.covarianceMatrix)**(0.5) * np.exp(-0.5 * maha)'''
     def getStartPoint(self):
         return np.random.multivariate_normal(self.mean, self.covarianceMatrix)
     
@@ -74,7 +79,8 @@ class RegionalMultivariateNorm(object):
             det = np.linalg.det(self.sigma)
             if det == 0:
                 raise NameError("The covariance matrix can't be singular")
-
+            print self.sigma
+            print det
             norm_const = 1.0/ ( math.pow((2*np.pi),float(size)/2) * math.pow(det,1.0/2) )
             x_mu = np.matrix(x -self.mu)
             inv = np.linalg.inv(self.sigma)      
@@ -90,19 +96,6 @@ def arbitraryPDF(x):
     else:
         return 0.0000000000000000000000000000001
 
-class GaussianMixture(object):
-    def __init__(self, mu, sigma, muTwo, sigmaTwo):
-        self.one = RegionalMultivariateNorm(mu, sigma)
-        self.two = RegionalMultivariateNorm(muTwo, sigmaTwo)
-    
-    def getOne(self):
-        return self.one
-    
-    def getTwo(self):
-        return self.two
-        
-    def getPDF(self, x):
-        return self.one.getPDF(x)+self.two.getPDF(x)
         
 class AdaptiveMHProposal(object):
 
