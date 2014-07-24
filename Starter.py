@@ -22,6 +22,6 @@ if __name__ == '__main__':
     problem2 = MH.MetropolisHastings(Name.ADAPTIVE_GIBBS, lambda x: desired.getPDF(x, None), Distribution.AdaptiveGibbsProposal(dimensionality), randomWalk=True)
     
   #  problem0.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=False, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
-    #problem0b.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
+    problem0b.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
    # problem1.start(noOfSamples=10000000, stepSize=stepSize, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov )
-    problem2.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
+    #problem2.start(noOfSamples=10000000, stepSize=1000, dimensionality=dimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)

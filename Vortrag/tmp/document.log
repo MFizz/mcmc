@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.6.24)  24 JUL 2014 01:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.6.24)  24 JUL 2014 18:21
 entering extended mode
 **document.tex
 (D:\Data\github\mcmc\Vortrag\document.tex
@@ -1128,13 +1128,13 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 113.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 113.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 113.
 Package rerunfilecheck Info: File `document.out' has not changed.
-(rerunfilecheck)             Checksum: F671E5134F9BBBEE9F8379BA7B8D187C;699.
+(rerunfilecheck)             Checksum: 4529B78175D63E479B906B507E229AC3;691.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 113.
  ) 
 Here is how much of TeX's memory you used:
  16532 strings out of 493921
  309087 string characters out of 3144876
- 404263 words of memory out of 3000000
+ 404217 words of memory out of 3000000
  19272 multiletter control sequences out of 15000+200000
  65653 words of font info for 105 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -1149,7 +1149,7 @@ x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files (x8
 X 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/f
 onts/type1/urw/symbol/usyr.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/u
 rw/symbol/usyr.pfb>
-Output written on document.pdf (30 pages, 453315 bytes).
+Output written on document.pdf (30 pages, 453392 bytes).
 PDF statistics:
  1922 PDF objects out of 2073 (max. 8388607)
  72 named destinations out of 1000 (max. 500000)

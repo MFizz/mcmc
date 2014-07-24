@@ -122,7 +122,7 @@ class MetropolisHastings():
                 acceptanceRates.append(acceptanceRate)
                 accepted = 0
                 suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
-                act.append(Utility.getACT(samples[-500:]))
+                act.append(Utility.getACT(samples[-5000:]))
                 asjdList.append(asjd)
                # act.append(69)
                 
