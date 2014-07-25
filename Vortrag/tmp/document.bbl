@@ -1,0 +1,29 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{Ros11}
+
+\bibitem[AT08]{Andrieu2008}
+Christophe Andrieu and Johannes Thoms, \emph{{A tutorial on adaptive MCMC}},
+  Statistics and Computing \textbf{18} (2008), no.~4, 343--373.
+
+\bibitem[GR01]{Roberts2001}
+Gareth~O. {[1] G. O. Roberts and J. S. Rosenthal, “Optimal scaling for
+  various Metropolis-Hastings algorithms,” Statistical Science, vol. 16, no.
+  4, pp. 351–367, Nov. 2001.Roberts} and Jeffrey~S. Rosenthal, \emph{{Optimal
+  scaling for various Metropolis-Hastings algorithms}}, Statistical Science
+  \textbf{16} (2001), no.~4, 351--367.
+
+\bibitem[Ros11]{Rosenthal2010}
+JS~Rosenthal, \emph{{Optimal proposal distributions and adaptive MCMC}},
+  Handbook of Markov Chain Monte Carlo (2011), no.~x, 1--25.
+
+\bibitem[RR09]{Roberts2009}
+GO~Roberts and JS~Rosenthal, \emph{{Examples of adaptive MCMC}}, Journal of
+  Computational and \ldots (2009), 1--28.
+
+\end{thebibliography}

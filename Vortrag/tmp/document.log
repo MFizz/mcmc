@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.6.24)  25 JUL 2014 03:23
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.6.24)  25 JUL 2014 04:57
 entering extended mode
 **document.tex
 (D:\Data\github\mcmc\Vortrag\document.tex
@@ -1127,53 +1127,140 @@ LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 ] [35
 
 ])
-(D:\Data\github\mcmc\Vortrag\Summary.tex) [36
+(D:\Data\github\mcmc\Vortrag\Summary.tex)
+(D:\Data\github\mcmc\Vortrag\document.bbl
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 12.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.85492pt on input line 12.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 ...{[1] G. O. Roberts and J. S. Rosenthal, ‚Ä
+                                                  úOptimal scaling for
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 ...[1] G. O. Roberts and J. S. Rosenthal, ‚Äú
+                                                  Optimal scaling for
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16   various Metropolis-Hastings algorithms,‚Ä
+                                                ù Statistical Science, vol. ...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16   various Metropolis-Hastings algorithms,‚Äù
+                                                  Statistical Science, vol. ...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17   4, pp. 351‚Ä
+                   ì367, Nov. 2001.Roberts} and Jeffrey~S. Rosenthal, \emph{...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17   4, pp. 351‚Äì
+                    367, Nov. 2001.Roberts} and Jeffrey~S. Rosenthal, \emph{...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [36
 
 ]
+Overfull \vbox (12.11325pt too high) has occurred while \output is active []
+
+
+[37 <D:/Program Files (x86)/MiKTeX 2.9/tex/latex/beamer/base/art/beamericonarti
+cle.pdf>]
 \tf@nav=\write6
 \tf@toc=\write7
 \tf@snm=\write8
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 113.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 113.
-
-(D:\Data\github\mcmc\Vortrag\document.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 113.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 113.
-
-
-Package rerunfilecheck Warning: File `document.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `document.out':
-(rerunfilecheck)             Before: 0C14C05535B648CDFD09BC01F292278E;691
-(rerunfilecheck)             After:  9E98BB92E12A9CC37E46BC5F882D4305;691.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 113.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 121.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 121.
+ (D:\Data\github\mcmc\Vortrag\document.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 121.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 121.
+Package rerunfilecheck Info: File `document.out' has not changed.
+(rerunfilecheck)             Checksum: 66B8C792585FCF800C4F979ED48C6C10;762.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 121.
  ) 
 Here is how much of TeX's memory you used:
- 16554 strings out of 493921
- 309281 string characters out of 3144876
- 409591 words of memory out of 3000000
- 19281 multiletter control sequences out of 15000+200000
- 65653 words of font info for 105 fonts, out of 3000000 for 9000
+ 16622 strings out of 493921
+ 310951 string characters out of 3144876
+ 410667 words of memory out of 3000000
+ 19338 multiletter control sequences out of 15000+200000
+ 68383 words of font info for 107 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  49i,20n,65p,398b,789s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{Outline0.2.5.33} has been referenced but does not
- exist, replaced by a fixed one
-
-{D:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<D:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Fi
-les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program File
-s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><D:/Program Files (x86)/MiKTeX 
-2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/urw/symbol/usyr.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw
-/symbol/usyr.pfb>
-Output written on document.pdf (36 pages, 568650 bytes).
+{D:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<D:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fo
+nts/type1/urw/helvetic/uhvro8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/typ
+e1/urw/symbol/usyr.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/symbo
+l/usyr.pfb>
+Output written on document.pdf (37 pages, 611436 bytes).
 PDF statistics:
- 2443 PDF objects out of 2487 (max. 8388607)
- 85 named destinations out of 1000 (max. 500000)
- 209 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2610 PDF objects out of 2984 (max. 8388607)
+ 91 named destinations out of 1000 (max. 500000)
+ 217 words of extra memory for PDF output out of 10000 (max. 10000000)
 

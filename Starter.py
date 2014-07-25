@@ -14,7 +14,7 @@ desiredDimensionality = 2
 desiredMean = np.array([-4,-2])
 desiredCov = np.array([[6,-1],[-1,2]])
 stepSize = 1000
-noOfSamples = 10000
+noOfSamples = 100000
 
 # high dim
 highDimensionality = 12
@@ -33,6 +33,7 @@ if __name__ == '__main__':
     problem0 = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, stats.cauchy.pdf, Distribution.UnivariateNormal(0,1), True)
     
     problem1 = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, lambda x: desired.getPDF(x, None), Distribution.MultivariateNormal(np.zeros((desiredDimensionality,)), np.identity(desiredDimensionality)/5.), randomWalk=True)
+    problem1b = MH.MetropolisHastings(Name.METROPOLIS_HASTINGS, lambda x: highdimensional.getPDF(x,None), Distribution.MultivariateNormal(np.zeros((highDimensionality,)), 0.5 * np.identity(highDimensionality)), randomWalk=True)
     
     problem2 = MH.MetropolisHastings(Name.ADAPTIVE_METROPOLIS_HASTINGS, lambda x: desired.getPDF(x, None), Distribution.MultivariateNormal(np.zeros((desiredDimensionality,)), 0.1**2 * np.identity(desiredDimensionality) * 1./desiredDimensionality), randomWalk=True)
     problem2b = MH.MetropolisHastings(Name.ADAPTIVE_METROPOLIS_HASTINGS, lambda x: highdimensional.getPDF(x,None), Distribution.MultivariateNormal(np.zeros((highDimensionality,)), 0.1**2 * np.identity(highDimensionality) * 1./highDimensionality), randomWalk=True)
@@ -44,10 +45,11 @@ if __name__ == '__main__':
     problem4b = RMH.RegionalMetropolisHastings(Name.REGIONAL_ADAPTIVE_METROPOLIS_HASTINGS,lambda x: highdimensional.getPDF(x,None))
   #  problem0.start(noOfSamples=noOfSamples, stepSize=1000, dimensionality=desiredDimensionality, animateStatistics=False, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
    # problem1.start(noOfSamples=noOfSamples, stepSize=1000, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
+    problem1b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov)
    # problem2.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov )
-   # problem2b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
+    problem2b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
     #problem3.start(noOfSamples=noOfSamples, stepSize=1000, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
-   # problem3b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
+    problem3b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
    # problem4.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True,desiredCovarianceMatrix=desiredCov)
     problem4b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False,desiredCovarianceMatrix=highDimCov)
     

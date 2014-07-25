@@ -106,10 +106,10 @@ class RegionalMetropolisHastings():
                 x_new = np.random.multivariate_normal(x, np.identity(dimensionality)*np.exp(2*a))
                 #if self.desired.one.getPDF(x_new) <= self.desired.two.getPDF(x_new): 
                 if np.linalg.norm(x_new) <= dimensionality:
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) 
+                    acceptance = self.desired(x_new)/self.desired(x) 
                 else:
                     
-                    acceptance = self.desired(x_new)/self.check(self.desired(x)) * np.exp(dimensionality*(a-b)-0.5*np.dot(x,x_new)*(np.exp(-2*b)-np.exp(-2*a)))
+                    acceptance = self.desired(x_new)/self.desired(x) * np.exp(dimensionality*(a-b)-0.5*np.dot(x,x_new)*(np.exp(-2*b)-np.exp(-2*a)))
             else: 
                 propB = True
                 propBBatch = True

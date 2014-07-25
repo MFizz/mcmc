@@ -1,5 +1,29 @@
-\subsection{Results}
+\subsection{An Example With More Dimensions}
 
 \begin{frame}
-\frametitle{Model}
+\frametitle{An Example With More Dimensions}
+\begin{block}{target distribution}
+\begin{itemize}
+  \item $d=12$
+  \item $\mu_{(i)} \in [-2,2]$
+  \item all dimensions are correlated
+  \item 100,000 samples
+\end{itemize}
+\end{block}
+
+\begin{block}{results}
+\begin{table}
+\begin{tabular}{|c|cccc|}
+\hline
+& Acceptance & Suboptimality & ACT & ASJD\\
+\hline
+RWM & $0.26\rightarrow 0.26$ & 1.14 & 64 & 0.58\\
+AM & $0.45\rightarrow 0.28$ & 1.00 & 40 & 0.84\\
+AMWG & $0.78\rightarrow 0.43$ & 1.14 & 60 & 0.61\\
+RAMA & $0.14\rightarrow 0.24$ & 1.14 & 83 & 2.12\\
+\hline
+
+\end{tabular}
+\end{table}
+\end{block}
 \end{frame}
