@@ -9,5 +9,5 @@
 \beamer@subsectionintoc {2}{2}{Adaptive Metropolis}{15}{0}{2}
 \beamer@subsectionintoc {2}{3}{Adaptive Metropolis Within Gibbs}{20}{0}{2}
 \beamer@subsectionintoc {2}{4}{Regional Metropolis Hastings}{26}{0}{2}
-\beamer@subsectionintoc {2}{5}{Results}{28}{0}{2}
-\beamer@sectionintoc {3}{Summary}{30}{0}{3}
+\beamer@subsectionintoc {2}{5}{Results}{34}{0}{2}
+\beamer@sectionintoc {3}{Summary}{36}{0}{3}

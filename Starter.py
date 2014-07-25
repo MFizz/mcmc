@@ -11,16 +11,16 @@ import Distribution
 import numpy as np
 
 desiredDimensionality = 2
-desiredMean = np.array([-5,-2])
+desiredMean = np.array([-4,-2])
 desiredCov = np.array([[6,-1],[-1,2]])
 stepSize = 1000
-noOfSamples = 100000
+noOfSamples = 10000
 
 # high dim
 highDimensionality = 12
-highDimMean = (np.random.rand(highDimensionality)-0.5) * 0
+highDimMean = (np.random.rand(highDimensionality)-0.5) * 4
 mat = (np.random.rand(highDimensionality, highDimensionality)-0.5)
-highDimCov = (mat + mat.transpose()) * 0.01
+highDimCov = (mat + mat.transpose()) * 0.1
 highDimCov = highDimCov - np.diag(np.diag(highDimCov)) + np.diag(np.diag(np.random.rand(highDimensionality, highDimensionality))) * 4
 #highDimCov = np.diag(np.ones_like(highDimMean))
 print highDimMean
@@ -48,8 +48,8 @@ if __name__ == '__main__':
    # problem2b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
     #problem3.start(noOfSamples=noOfSamples, stepSize=1000, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True, gibbsBatchSize=50, desiredCovarianceMatrix=desiredCov)
    # problem3b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False, gibbsBatchSize=50, desiredCovarianceMatrix=highDimCov )
-    problem4.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True,desiredCovarianceMatrix=desiredCov)
-   # problem4b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False,desiredCovarianceMatrix=highDimCov)
+   # problem4.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=desiredDimensionality, animateStatistics=True, animateDistribution=True,desiredCovarianceMatrix=desiredCov)
+    problem4b.start(noOfSamples=noOfSamples, stepSize=stepSize, dimensionality=highDimensionality, animateStatistics=False, animateDistribution=False,desiredCovarianceMatrix=highDimCov)
     
     
     

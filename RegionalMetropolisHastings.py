@@ -49,6 +49,8 @@ class RegionalMetropolisHastings():
         n=0
         # get a start point
         x = np.random.multivariate_normal(np.zeros(dimensionality), np.identity(dimensionality))
+        while not self.desired(x) > 0:
+            x = np.random.multivariate_normal(np.zeros(dimensionality), np.identity(dimensionality))
         samplesA = np.array([x])
         samplesB = np.array([x])
         samples = np.array([x])
