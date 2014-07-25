@@ -98,8 +98,8 @@ where $d$ denotes the dimensionality of f(x)
 \begin{itemize} 
 \item the theoretic ideal acceptance rate in higher dimensions is 0.234
 \item to achieve ideal acceptance rate we adapt $a_i$ for every region after 100 samples
-\item proposal for $/delta(n)$ where $n$ is the $n^{th}$ batch of 100 samples:\\
-$\delta(n) = min(0.01,n^{-1/2}$
+\item proposal for $\delta(n)$ where $n$ is the $n^{th}$ batch of 100 samples:\\
+$\delta(n) = min(0.01,n^{-1/2})$
 \item if after 100 samples real acceptance rate $>$ ideal the relevant parameter is increased by $\delta(n)$
 \item if acceptance rate $<$ ideal it is decreased
 \item if there where no proposals in for this region in the entire badge it will not be altered 
