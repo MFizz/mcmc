@@ -60,7 +60,9 @@ class RegionalMetropolisHastings():
         act = []
         asjdList = []
         asjd = 0
-        
+        sampleX = []
+        acceptanceRates = []
+
         if animateDistribution or animateStatistics:
             animationAx = None
             acceptanceRateAx = None
@@ -74,8 +76,6 @@ class RegionalMetropolisHastings():
                 binSize = 0.25
                 binBoundaries = np.arange(-10,10,binSize)
             if animateStatistics:
-                sampleX = []
-                acceptanceRates = []
                 if animateDistribution:
                     fig = plt.figure(figsize=(18,10))
                     animationAx = plt.subplot(231)
@@ -159,15 +159,16 @@ class RegionalMetropolisHastings():
             if samplesA.shape[0]%acceptanceWindow !=0:
                 acceptanceRateA = float(acceptedA)/(samplesA.shape[0]%acceptanceWindow)
                 #acceptanceRateB = float(acceptedB)/(samples.shape[0]%acceptanceWindow)
-            elif animateStatistics:
-                sampleX.append(samples.shape[0])
+            else:
+                print i, acceptanceRateA
                 acceptanceRates.append(acceptanceRateA)
-                #acceptanceRates.append(acceptanceRateB)
                 accepted = 0
-                suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
-                act.append(Utility.getACT(samples[-5000:]))
-                asjdList.append(asjd)
-               # act.append(69)
+                if animateStatistics:
+                    sampleX.append(samples.shape[0])
+                    suboptimality.append(Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix))
+                    act.append(Utility.getACT(samples[-5000:]))
+                    
+                    asjdList.append(asjd)
                 
             
             if (animateDistribution or animateStatistics) and (i+2)%(stepSize)==0:
@@ -182,6 +183,17 @@ class RegionalMetropolisHastings():
                         
                 plt.pause(0.00001)
             
-    
+        if dimensionality > 2:
+            acceptanceRate = acceptanceRates[-1]
+            act = Utility.getACT(samples)
+            suboptimality = Utility.getSuboptimality(covCalc.getSampleCovariance(samples), desiredCovarianceMatrix)
+            
+            asjd = asjd
+            print self.algorithm
+            print "acc: ", acceptanceRate
+            print "mean acc: ", np.mean(acceptanceRates)
+            print "subopt: ", suboptimality
+            print "act: ", act
+            print "asjd", asjd
         
         
